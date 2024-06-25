@@ -112,3 +112,157 @@ class Backbone(nn.Module):
 #------------------------(train.ipynb)-----------------#
         "model_path"        : '出简701.pth',#自训的
 ```
+其他还可以尝试的改进：
+```
+# class Tb1(nn.Module):#四内
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.尾=Conv(4*c,c,3,1)
+#         self.出=Conv(2*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,self.池(x)],1)
+#         x2=self.中(y)
+#         z=torch.cat([self.池(y),x2],1)
+#         x3=self.末(z)
+#         x4=self.尾(torch.cat([self.池(z),x3],1))
+#         return self.出(torch.cat([x1,x4],1))
+# class Tb1(nn.Module):#加四,原为18.6,现15.7
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(c,c,3,1)
+#         self.末=Conv(c,c,3,1)
+#         self.尾=Conv(c,c,3,1)
+#         self.出=Conv(4*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=x1+self.池(x)
+#         x2=self.中(y)
+#         z=x2+self.池(y)
+#         x3=self.末(z)
+#         x4=self.尾(x3+self.池(z))
+#         return self.出(torch.cat([x1,x2,x3,x4],1))
+# class Tb(nn.Module):#五卷
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.尾=Conv(4*c,c,3,1)
+#         self.终=Conv(5*c,c,3,1)
+#         self.出=Conv(5*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,self.池(x)],1)
+#         x2=self.中(y)
+#         z=torch.cat([self.池(y),x2],1)
+#         x3=self.末(z)
+#         i=torch.cat([self.池(z),x3],1)
+#         x4=self.尾(i)
+#         x5=self.终(torch.cat([self.池(i),x4],1))
+#         return self.出(torch.cat([x1,x2,x3,x4,x5],1))
+# class Tb1(nn.Module):#七卷
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.尾=Conv(4*c,c,3,1)
+#         self.终=Conv(5*c,c,3,1)
+#         self.完=Conv(6*c,c,3,1)
+#         self.出=Conv(6*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,self.池(x)],1)
+#         x2=self.中(y)
+#         z=torch.cat([self.池(y),x2],1)
+#         x3=self.末(z)
+#         i=torch.cat([self.池(z),x3],1)
+#         x4=self.尾(i)
+#         j=torch.cat([self.池(i),x4],1)
+#         x5=self.终(j)
+#         x6=self.完(torch.cat([self.池(j),x5],1))
+#         return self.出(torch.cat([x1,x2,x3,x4,x5,x6],1))
+# class Tb1(nn.Module):#独四
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.尾=Conv(4*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,self.池(x)],1)
+#         x2=self.中(y)
+#         z=torch.cat([self.池(y),x2],1)
+#         x3=self.末(z)
+#         x4=self.尾(torch.cat([self.池(z),x3],1))
+#         return x4
+# class Tb1(nn.Module):#外池
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.出=Conv(3*c,2*c,3,2)
+#         self.小池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#         self.大池=nn.MaxPool2d(kernel_size=9,stride=1,padding=4)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,x],1)
+#         x2=self.中(y)
+#         x3=self.末(torch.cat([y,x2],1))
+#         return self.出(torch.cat([self.小池(x1),self.大池(x2),x3],1))
+# class Tb1(nn.Module):#均池
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.出=Conv(3*c,2*c,3,2)
+#         self.池=nn.MaxPool2d(kernel_size=5,stride=1,padding=2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,self.池(x)],1)
+#         x2=self.中(y)
+#         x3=self.末(torch.cat([self.池(y),x2],1))
+#         return self.出(torch.cat([self.池(x1),self.池(x2),x3],1))
+# class Tb1(nn.Module):#不池
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.出=Conv(3*c,2*c,3,2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,x],1)
+#         x2=self.中(y)
+#         x3=self.末(torch.cat([y,x2],1))
+#         return self.出(torch.cat([x1,x2,x3],1))
+# class Tb(nn.Module):#四卷
+#     def __init__(self, c):
+#         super(Tb, self).__init__()
+#         self.头=Conv(c,c,3,1)
+#         self.中=Conv(2*c,c,3,1)
+#         self.末=Conv(3*c,c,3,1)
+#         self.尾=Conv(4*c,c,3,1)
+#         self.出=Conv(4*c,2*c,3,2)
+#     def forward(self, x):
+#         x1=self.头(x)
+#         y=torch.cat([x1,x],1)
+#         x2=self.中(y)
+#         z=torch.cat([y,x2],1)
+#         x3=self.末(z)
+#         x4=self.尾(torch.cat([z,x3],1))
+#         return self.出(torch.cat([x1,x2,x3,x4],1))
+```
